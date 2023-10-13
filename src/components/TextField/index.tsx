@@ -6,12 +6,12 @@ import "./text-field.css";
 interface TextFieldProps {
   name: string;
   value: string;
-  deleteList?: boolean;
+  deleteList?: () => void;
   onChange?: (e: any) => void;
   placeholder?: string;
   className?: string;
   handleCancel?: (e: any) => void;
-  onEnter?: () => void;
+  onEnter?: (e?: any) => void;
 }
 
 export default function TextField({
@@ -24,6 +24,8 @@ export default function TextField({
   handleCancel,
   onEnter,
 }: TextFieldProps) {
+
+  
   return (
     <div className="list-title-edit">
       <TextareaAutosize

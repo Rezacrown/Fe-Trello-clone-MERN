@@ -30,3 +30,23 @@ export const createTodos = async (name: string) => {
     console.log(error);
   }
 };
+
+export const editTodos = async (id: number, name: string) => {
+  try {
+    const response = await axios.put(`${config.api_Host}/api/todos/${id}`, {name});
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteTodos = async (id: number) => {
+  try {
+    const response = await axios.delete(`${config.api_Host}/api/todos/${id}`);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

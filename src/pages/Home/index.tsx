@@ -21,10 +21,10 @@ export default function HomePage() {
   const [todos, setTodos] = useState<TodosInterfaceProps[]>([]);
 
   // set useCallback for any function
-  const getTodos = async () => {
-    await getAllTodos().then((data: [TodosInterfaceProps]) => {
+  const getTodos = () => {
+    getAllTodos().then((data: [TodosInterfaceProps]) => {
       setTodos(data);
-      console.log({ todos });
+      // console.log({ todos });
     });
   };
 
@@ -37,9 +37,8 @@ export default function HomePage() {
     <div>
       <Header>TRELLO MERN</Header>
       <Board>
-        <Card todos={todos} />
+        <Card todos={todos} getTodosAPI={() => getTodos()} />
 
-        
         <div className="add-list">
           {isToggle ? (
             <AddList
