@@ -76,7 +76,7 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
     setEditList({ ...editList, name: e.currentTarget.value });
   };
 
-  const handleUpdate = async (id: number, e: any) => {
+  const handleUpdate = async (id: number, e: React.KeyboardEvent) => {
     if (e.keyCode == 13) {
       await editTodos(id, editList.name);
       setEditList({ ...editList, status: false });

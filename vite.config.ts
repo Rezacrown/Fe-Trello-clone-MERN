@@ -7,6 +7,14 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  preview: {
+    port: 3000,
+    // https: true
+  },
+  build: {
+    assetsDir: 'resource',
+    cssMinify: 'esbuild'
+  },
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
   },
