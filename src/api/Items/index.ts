@@ -37,3 +37,16 @@ export const deleteItems = async (id: number) => {
     console.log(error);
   }
 };
+
+export const moveItems = async (id: number, targetTodoId: number | string) => {
+  try {
+    const response = await axios.put(
+      `${config.api_Host}/api/items/move/${id}`,
+      { targetTodoId }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

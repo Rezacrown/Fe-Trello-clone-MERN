@@ -1,7 +1,7 @@
 import "./card.css";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { deleteTodos, getTodosById, editTodos } from "@/api/Todos";
-import { deleteItems } from "@/api/Items";
+import { deleteItems, moveItems } from "@/api/Items";
 
 // components
 import Title from "../Title";
@@ -30,6 +30,11 @@ interface EditItemStateProps {
   todoId: string | number;
 }
 
+interface DragItemStateProps {
+  itemId: null | number;
+  currentTodoId: null | number;
+}
+
 interface CardProps {
   // todos: [TodosInterfaceProps] | [];
   todos: TodosInterfaceProps[] | [];
@@ -54,6 +59,10 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
     status: false,
     itemId: "",
     todoId: "",
+  });
+  const [dragItem, setDragItem] = useState<DragItemStateProps>({
+    itemId: null,
+    currentTodoId: null,
   });
 
   // handle function
@@ -87,6 +96,34 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
     getTodosAPI();
   };
 
+  const handleMoveItem = async (id: number, targetTodo: number) => {
+    await moveItems(id, targetTodo);
+    getTodosAPI();
+  };
+
+  // drag event
+  const handleDragStart = (itemId: number, currentTodoId: number) => {
+    setDragItem({
+      itemId: itemId,
+      currentTodoId: currentTodoId,
+    });
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    // console.log("drag over");
+  };
+
+  const handleOnDrop = (targetTodo: number) => {
+    // const itemId = e.dataTransfer.getData("itemId");
+    // const curretTodo = e.dataTransfer.getData("targetTodoId");
+
+    if (dragItem.currentTodoId != targetTodo) {
+      // console.log({ current: dragItem.currentTodoId, targetTodo });
+      handleMoveItem(Number(dragItem.itemId), targetTodo);
+    }
+  };
+
   return (
     <>
       {todos.map((data: TodosInterfaceProps) => (
@@ -111,7 +148,11 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
 
             {/* update item */}
             {data.Items.map((item) => (
-              <Fragment key={item.id}>
+              <div
+                key={item.id}
+                onDragOver={(e) => handleDragOver(e)}
+                onDrop={() => handleOnDrop(data.id)}
+              >
                 {editItem.status && editItem.itemId === item.id ? (
                   <AddCard
                     todoId={editItem.todoId}
@@ -133,6 +174,8 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
                     }
                     onMouseEnter={() => setHover(item.id)}
                     onMouseLeave={() => setHover(null)}
+                    draggable
+                    onDragStart={() => handleDragStart(item.id, data.id)}
                   >
                     <span>{item.name}</span>
                     {hover === item.id && (
@@ -156,7 +199,7 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
                     )}
                   </div>
                 )}
-              </Fragment>
+              </div>
             ))}
             {/* update item end */}
 
