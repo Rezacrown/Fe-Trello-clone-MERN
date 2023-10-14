@@ -9,11 +9,11 @@ export default defineConfig({
   },
   preview: {
     port: 3000,
-    // https: true
+    
   },
   build: {
-    assetsDir: 'resource',
-    cssMinify: 'esbuild'
+    assetsDir: "resource",
+    cssMinify: "esbuild",
   },
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
