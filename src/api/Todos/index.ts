@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "@/config";
+import { toast } from "react-toastify";
 
 export const getAllTodos = async () => {
   try {
@@ -7,7 +8,7 @@ export const getAllTodos = async () => {
 
     return response.data.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
@@ -17,7 +18,7 @@ export const getTodosById = async (id: number) => {
 
     return response.data.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
@@ -27,17 +28,19 @@ export const createTodos = async (name: string) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
 export const editTodos = async (id: number, name: string) => {
   try {
-    const response = await axios.put(`${config.api_Host}/api/todos/${id}`, {name});
+    const response = await axios.put(`${config.api_Host}/api/todos/${id}`, {
+      name,
+    });
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
@@ -47,6 +50,6 @@ export const deleteTodos = async (id: number) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };

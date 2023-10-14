@@ -127,7 +127,12 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
   return (
     <>
       {todos.map((data: TodosInterfaceProps) => (
-        <div className="list" key={data.id}>
+        <div
+          className="list"
+          key={data.id}
+          onDragOver={(e) => handleDragOver(e)}
+          onDrop={() => handleOnDrop(data.id)}
+        >
           <div className="lists-card">
             {editList.status && editList.id == data.id ? (
               <TextField
@@ -148,11 +153,7 @@ export default function Card({ todos, getTodosAPI }: CardProps) {
 
             {/* update item */}
             {data.Items.map((item) => (
-              <div
-                key={item.id}
-                onDragOver={(e) => handleDragOver(e)}
-                onDrop={() => handleOnDrop(data.id)}
-              >
+              <div key={item.id}>
                 {editItem.status && editItem.itemId === item.id ? (
                   <AddCard
                     todoId={editItem.todoId}

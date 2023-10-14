@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "@/config";
+import { toast } from "react-toastify";
 
 interface payloadCreateItem {
   name: string;
@@ -12,7 +13,7 @@ export const createItems = async (payload: payloadCreateItem) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
@@ -24,7 +25,7 @@ export const editItems = async (id: number | string, name: string) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
@@ -34,7 +35,7 @@ export const deleteItems = async (id: number) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
 
@@ -47,6 +48,6 @@ export const moveItems = async (id: number, targetTodoId: number | string) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error("ada error");
   }
 };
